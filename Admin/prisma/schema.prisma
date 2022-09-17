@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+//!------------------------------
+model Moderation {
+  id Int @id @default(autoincrement())
+  role String
+  login String
+  password String
+  reports Report[]
+}
+
+model Report {
+  id Int @id @default(autoincrement())
+  title String
+  date DateTime @default(now())
+  text String
+  moderation Moderation @relation(fields: [moderationId], references: [id], onDelete: Cascade)
+  moderationId Int
+}
+//!------------------------------
+model Client {
+  id           Int      @id @default(autoincrement())
+  name         String
+  surname      String
+  mail         String   
+  phone        String?
+  promocodes   String[]
+  password     String
+  wishlist     Int[]
+  orders       Order[]
+  reviews      Review[]
+}
+
+model Order {
+  id Int @id@default(autoincrement())
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId Int
+  date DateTime @default(now())
+  products ProductOnOrder[]
+}
+
+model ProductOnOrder{
+  id Int @id@default(autoincrement())
+  product Product @relation(fields:[productId],references:[id],   onUpdate: Cascade)
+  productId Int
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int
+  quantity Int @default(1)
+}
+
+model Review{
+  id Int @id @default(autoincrement())
+  client Client @relation(fields: [clientId], references: [id],onDelete: Cascade)
+  clientId Int
+  createdAt  DateTime   @default(now())
+  title      String
+  text       String
+  rating Int
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int 
+}
+
+model Product {
+  id                   Int                    @id @default(autoincrement())
+  title                String                 
+  amount               Int                    @default(0)
+  price                Int
+  brand                String
+  country              String?
+  expires              String?
+  wayToUse             String?
+  contain              String?
+  description          String
+  storage              String
+  note               String?
+  retailerId           Int
+  clicks               Int @default(0)
+  createdAt DateTime @default(now())
+  retailer             Retailer               @relation(fields: [retailerId], references: [id], onDelete: Cascade)
+  categories Category[]
+  images               Image[]
+  reviews              Review[]
+  orders               ProductOnOrder[]
+}
+
+model Image {
+  id        Int     @id @default(autoincrement())
+  path      String
+  productId Int
+  alt       String
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Category{
+  id Int @id @default(autoincrement())
+  name String @unique
+  products Product[]
+  keywords String[]
+  retailers Retailer[]
+}
+
+model Retailer {
+  id           Int       @id @default(autoincrement())
+  email        String
+  FIO         String
+  phone        String?
+  companyName String
+  category  Category @relation(fields:[mainCategoryId],references: [id])
+  mainCategoryId Int
+  products Product[]
+}

@@ -1,0 +1,20 @@
+[
+    {
+        "firstName": "Alex",
+        "lastName": "Zok",
+        "username": "Assss",
+        "hash": "$2a$10$0W3POROPk3ZTdZ.jnnkmB.Tbqw.XRJbSH4N6RAqZGtRKWmzUClNWS",
+        "id": 1,
+        "dateCreated": "2022-09-15T04:12:35.922Z",
+        "dateUpdated": "2022-09-15T04:12:35.922Z"
+    },
+    {
+        "firstName": "Alex",
+        "lastName": "123",
+        "username": "Fas",
+        "hash": "$2a$10$tsbgS0nMICHCPA816LZ7E.sEicI7YT7He1XAbjATfMju4oO23vtQK",
+        "id": 2,
+        "dateCreated": "2022-09-15T04:13:35.216Z",
+        "dateUpdated": "2022-09-15T04:13:35.216Z"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "display_name": "Super Admin",
+        "route": "/superadmin",
+        "icon": "bx bxs-user-rectangle"
+    },
+    {
+        "display_name": "Companies",
+        "route": "/companies",
+        "icon": "bx bxs-buildings"
+    },
+    {
+        "display_name": "Users",
+        "route": "/users",
+        "icon": "bx bxs-user-account"
+    },
+    {
+        "display_name": "New Entries",
+        "route": "/new_entries",
+        "icon": "bx bxs-message-alt-add"
+    },
+    {
+        "display_name": "View Entries",
+        "route": "/view_entries",
+        "icon": "bx bxs-file-find"
+    },
+    {
+        "display_name": "Radar Chart",
+        "route": "/radar_chart",
+        "icon": "bx bx-radar"
+    },
+    {
+        "display_name": "ScoreBoard",
+        "route": "/score_board",
+        "icon": "bx bx-clipboard"
+    }
+]
