@@ -1,11 +1,10 @@
 import '../styles/globals.css'
 import React from "react";
-import { WishlistProvider } from 'react-use-wishlist';
 
 export default function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page)
 
-  return getLayout(<WishlistProvider>
+  return getLayout(
     
-  <Component {...pageProps} /></WishlistProvider>)
+  <Component {...pageProps} />)
 }

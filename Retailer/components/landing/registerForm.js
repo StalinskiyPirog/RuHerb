@@ -8,6 +8,7 @@ export default function RegisterForm() {
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
+  const [file, setFile] = useState("");
   const [submitted, setSubmitted] = useState(false);
   
   const handleSubmit = (e) => {
@@ -155,6 +156,28 @@ export default function RegisterForm() {
                   name="city"
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
+              </div>
+              <div className="mt-4">
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Файлы
+              </label>
+              <div className="flex flex-col border-black items-start">
+                <input
+                  required
+                  multiple
+                  type="file"
+                  accept=".jpg, .jpeg, .png"
+                  placeholder="Москва"
+                  onChange={(e) => {
+                    setFile(e.target.value);
+                  }}
+                  name="images"
+                  className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </div>
               </div>
             </div>
 
