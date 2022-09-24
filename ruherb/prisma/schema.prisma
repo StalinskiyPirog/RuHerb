@@ -21,95 +21,177 @@ model Report {
   text String
 }
 //!------------------------------
+
+
+
 model Client {
-  id           Int      @id @default(autoincrement())
-  name         String
-  surname      String
-  mail         String   
-  phone        String?
-  promocodes   String[]
-  password     String
-  wishlist     Int[]
-  orders       Order[]
-  reviews      Review[]
+    id              Int                 @id @default(autoincrement())
+
+    name            String
+    surname         String
+
+    email           String              @unique
+    phone           String?             @unique
+
+    password        String
+
+    emailConfirmed  Boolean             @default(false)
+
+    createdAt       DateTime            @default(now())
+
+    promocodes      String[]
+
+    wishlist        Int[]
+    orders          Order[]
+    reviews         Review[]
 }
+
+
+model PaymentTransaction {
+    id              Int                 @id @default(autoincrement())
+
+    orderId         Int                 @unique
+    order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    success         Boolean
+    date            DateTime
+}
+
+
+model Delivery {
+    id              Int                 @id @default(autoincrement())
+
+    orderId         Int                 @unique
+    order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    statusCode      Int
+    address         String
+}
+
 
 model Order {
-  id Int @id@default(autoincrement())
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  clientId Int
-  date DateTime @default(now())
-  products ProductOnOrder[]
+    id              Int                 @id @default(autoincrement())
+
+    clientId        Int
+    client          Client              @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+    date            DateTime            @default(now())
+
+    delivery        Delivery?
+    paymant         PaymentTransaction?
+    
+    products        ProductOnOrder[]
 }
+
 
 model ProductOnOrder{
-  id Int @id@default(autoincrement())
-  product Product @relation(fields:[productId],references:[id],   onUpdate: Cascade)
-  productId Int
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId Int
-  quantity Int @default(1)
+    id              Int                 @id@default(autoincrement())
+
+    productId       Int
+    product         Product             @relation(fields:[productId],references:[id],   onUpdate: Cascade)
+
+    orderId         Int
+    order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    quantity        Int                 @default(1)
 }
+
 
 model Review{
-  id Int @id @default(autoincrement())
-  client Client @relation(fields: [clientId], references: [id],onDelete: Cascade)
-  clientId Int
-  createdAt  DateTime   @default(now())
-  title      String
-  text       String
-  rating Int
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId Int 
+    id              Int                 @id @default(autoincrement())
+
+    productId       Int
+    product         Product             @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+    clientId        Int
+    client          Client              @relation(fields: [clientId], references: [id],onDelete: Cascade)
+
+    createdAt       DateTime            @default(now())
+    lastEditTime    DateTime            @default(now())
+
+    title           String
+    text            String
+    rating          Int
+
+    retailerAnswer  String?
+    answerCreatedAt DateTime?
 }
+
 
 model Product {
-  id                   Int                    @id @default(autoincrement())
-  title                String                 
-  amount               Int                    @default(0)
-  price                Int
-  brand                String
-  country              String?
-  expires              String?
-  wayToUse             String?
-  contain              String?
-  description          String
-  storage              String
-  note               String?
-  retailerId           Int
-  clicks               Int @default(0)
-  createdAt DateTime @default(now())
-  retailer             Retailer               @relation(fields: [retailerId], references: [id], onDelete: Cascade)
-  categories Category[]
-  images               Image[]
-  reviews              Review[]
-  orders               ProductOnOrder[]
+    id              Int                 @id @default(autoincrement())
+
+    title           String                 
+    amount          Int                 @default(0)
+    price           Int
+    brand           String
+    country         String?
+    expires         String?
+    wayToUse        String?
+    contain         String?
+    description     String
+    storage         String
+    note            String?
+
+    visible         Boolean             @default(false)
+
+    retailerId      Int
+    retailer        Retailer            @relation(fields: [retailerId], references: [id], onDelete: Cascade)
+
+    clicks          Int                 @default(0)
+    createdAt       DateTime            @default(now())
+
+    categories      Category[]
+    images          ProductImage[]
+    reviews         Review[]
+    orders          ProductOnOrder[]
 }
 
-model Image {
-  id        Int     @id @default(autoincrement())
-  path      String
-  productId Int
-  alt       String
-  product   Product @relation(fields: [productId], references: [id])
+
+model ProductImage {
+    id              Int                 @id @default(autoincrement())
+
+    path            String
+    alt             String
+
+    productId       Int
+    product         Product             @relation(fields: [productId], references: [id])
 }
+
 
 model Category{
-  id Int @id @default(autoincrement())
-  name String @unique
-  products Product[]
-  keywords String[]
-  retailers Retailer[]
+    id              Int                 @id @default(autoincrement())
+
+    name            String              @unique
+
+    keywords        String[]
+
+    products        Product[]
+    retailers       Retailer[]
 }
 
+
 model Retailer {
-  id           Int       @id @default(autoincrement())
-  email        String
-  confirmed    Boolean
-  FIO         String
-  phone        String?
-  companyName String
-  category  Category @relation(fields:[mainCategoryId],references: [id])
-  mainCategoryId Int
-  products Product[]
+    id              Int                 @id @default(autoincrement())
+
+    email           String              @unique
+    emailConfirmed  Boolean             @default(false)
+    
+    name            String
+    surname         String
+    patrinymic      String
+
+    phone           String?             @unique
+    companyName     String              // @unique
+
+    city            String
+
+    confirmed       Boolean             @default(false)
+
+    password        String
+
+    mainCategoryId  Int
+    category        Category            @relation(fields:[mainCategoryId],references: [id])
+
+    products        Product[]
 }
