@@ -2,7 +2,7 @@
  * @brief   Подтверждение почты
  */
 
-import { EditProduct, FindProductById, FindRetailerBySessionKey }   from "../../components/functions/PrismaCRUD";
+import { EditProduct, FindProductById, FindCategoriesByIds, FindImagesByIds, FindRetailerBySessionKey } from "../../components/functions/PrismaCRUD";
 import { RESPONSE_ERROR }                                           from "../../components/functions/Enums"
 import { SuccessResponse, ErrorResponse }                           from "../../components/functions/ApiResponses"
 import { CheckRequiredFields, FilterObject }                        from "../../components/functions/Utils";
@@ -72,44 +72,46 @@ export default async function (req, res) {
         return;
     }
 
+    if (fields.categoriesId !== undefined) {
+        // Ищем категории, содержащиеся в запросе
+        var existCategories = await FindCategoriesByIds({
+            categoriesIds: fields.categoriesId
+        });
 
-    // Ищем категории, содержащиеся в запросе
-    var existCategories = await FindCategoriesByIds({
-        categoriesIds: fields.categoriesId
-    });
+        // Массив айди категорий, найденных в предыдущем пункте
+        var existCategoriesIds = [];
+        for (const category of existCategories) {
+            existCategoriesIds.push(category.id);
+        }
 
-    // Массив айди категорий, найденных в предыдущем пункте
-    var existCategoriesIds = [];
-    for (const category of existCategories) {
-        existCategoriesIds.push(category.id);
+        // Если кол-во найденных категорий не совпадает с количеством категорий в запросе 
+        // Ошибка: Не существуют категории [n, ...]
+        if (existCategoriesIds.length !== fields.categoriesId.length) {
+            var response = fields.categoriesId.filter(x => !existCategoriesIds.includes(x));
+            res.status(400).json(ErrorResponse(RESPONSE_ERROR.CATEGORY_NOT_EXIST, response));
+            return;
+        }
     }
 
-    // Если кол-во найденных категорий не совпадает с количеством категорий в запросе 
-    // Ошибка: Не существуют категории [n, ...]
-    if (existCategoriesIds.length !== fields.categoriesId.length) {
-        var response = fields.categoriesId.filter(x => !existCategoriesIds.includes(x));
-        res.status(400).json(ErrorResponse(RESPONSE_ERROR.CATEGORY_NOT_EXIST, response));
-        return;
-    }
+    if (fields.imagesId !== undefined) {
+        // Ищем изображения, содержащиейся в запросе
+        var existImages = await FindImagesByIds({
+            imagesIds: fields.imagesId
+        });
 
+        // Массив айди изображений, найденных в предыщуем пункте
+        var existImagesIds = [];
+        for (const image of existImages) {
+            existImagesIds.push(image.id);
+        }
 
-    // Ищем изображения, содержащиейся в запросе
-    var existImages = await FindImagesByIds({
-        imagesIds: fields.imagesId
-    });
-
-    // Массив айди изображений, найденных в предыщуем пункте
-    var existImagesIds = [];
-    for (const image of existImages) {
-        existImagesIds.push(image.id);
-    }
-
-    // Если кол-во найденных изображений не совпадает с количеством изображений в запросе 
-    // Ошибка: Не существуют изображения [n, ...]
-    if (existImagesIds.length !== fields.imagesId.length) {
-        var response = fields.imagesId.filter(x => !existImagesIds.includes(x));
-        res.status(400).json(ErrorResponse(RESPONSE_ERROR.IMAGE_NOT_EXIST, response));
-        return;
+        // Если кол-во найденных изображений не совпадает с количеством изображений в запросе 
+        // Ошибка: Не существуют изображения [n, ...]
+        if (existImagesIds.length !== fields.imagesId.length) {
+            var response = fields.imagesId.filter(x => !existImagesIds.includes(x));
+            res.status(400).json(ErrorResponse(RESPONSE_ERROR.IMAGE_NOT_EXIST, response));
+            return;
+        }
     }
 
 

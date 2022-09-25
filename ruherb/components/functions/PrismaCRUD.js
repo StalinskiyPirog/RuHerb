@@ -382,6 +382,28 @@ export async function FindProductById({ productId }) {
 export async function EditProduct({ productId, data }) {
   data.visible = false;
 
+  // На входе айди категорий, нужно преобразовать их в категории
+  if (data.categoriesId !== undefined) {
+    let connectedCateroies = [];
+    data.categoriesId.map((i) => {
+      connectedCateroies.push({ id: i });
+    });
+
+    data.categories = {set: connectedCateroies};
+    delete data.categoriesId;
+  }
+
+  // На входе айди изображений, нужно преобразовать их в изображения
+  if (data.imagesId !== undefined) {
+    let connectedImages = [];
+    data.imagesId.map((i) => {
+      connectedImages.push({ id: i });
+    });
+
+    data.images = {set: connectedImages};
+    delete data.imagesId;
+  }
+
   const product = await prisma.product.update({
     where: {
       id: productId,
