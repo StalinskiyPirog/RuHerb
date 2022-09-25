@@ -376,6 +376,29 @@ export async function FindProductById({ productId }) {
   return product;
 }
 
+/**
+ * @brief   Поиск товара по айди ритейлера
+ * 
+ * @returns Товар
+ */
+ export async function FindProductsByFilter({ filter, skip=0, take=0 }) {
+  var req = {
+    where: filter,
+    include: ProductInclude
+  }
+
+  if (skip > 0) {
+    req.skip = skip;
+  }
+
+  if (take > 0) {
+    req.take = take;
+  }
+
+  const product = await prisma.product.findMany(req);
+  return product;
+}
+
 
 
 /* ----------------------------- Изменение данных товара ------------------------------ */
@@ -508,7 +531,6 @@ export async function CreateReview({ productId, clientId, title, text, rating })
 
 
 
-
 export async function FindReviewByReviewId({ reviewId }) {
   const reviews = prisma.review.findUnique({
     where: {
@@ -518,7 +540,6 @@ export async function FindReviewByReviewId({ reviewId }) {
   });
   return reviews;
 }
-
 
 export async function FindReviewsByProductId({ productId, skip=0, take=0 }) {
   var req = {
@@ -542,6 +563,30 @@ export async function FindReviewsByProductId({ productId, skip=0, take=0 }) {
 
 
 
+export async function UpdateReviewAnswer({ reviewId, answer }) {
+  var date;
+  if (answer !== null) {
+    date = new Date;
+  } else {
+    date = null;
+  }
+
+  const review = await prisma.review.update({
+    where: {
+      id:   reviewId,
+    },
+
+    data: {
+      retailerAnswer:   answer,
+      answerCreatedAt:  date
+    },
+
+    include: ReviewInclude
+  });
+
+  return review;
+}
+
 export async function EditReview({ reviewId, title, text, rating }) {
   const review = await prisma.review.update({
     where: {
@@ -549,12 +594,23 @@ export async function EditReview({ reviewId, title, text, rating }) {
     },
 
     data: {
-      title:      title,
-      text:       text,
-      rating:     rating
+      title:        title,
+      text:         text,
+      rating:       rating,
+      lastEditTime: new Date()
     },
 
     include: ReviewInclude
+  });
+
+  return review;
+}
+
+export async function DeleteReview({ reviewId }) {
+  const review = await prisma.review.delete({
+    where: {
+      id:   reviewId,
+    }
   });
 
   return review;
