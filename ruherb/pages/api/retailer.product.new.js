@@ -2,7 +2,7 @@
  * @brief   Подтверждение почты
  */
 
-import { CreateProduct, FindCategoriesByIds, FindImagesByIds, FindRetailerBySessionKey }                  from "../../components/functions/PrismaCRUD";
+import { CreateProduct, FindCategoriesByIds, FindImagesByIds, FindRetailerBySessionKey } from "../../components/functions/PrismaCRUD";
 import { RESPONSE_ERROR }                                           from "../../components/functions/Enums"
 import { SuccessResponse, ErrorResponse }                           from "../../components/functions/ApiResponses"
 import { CheckRequiredFields }                                      from "../../components/functions/Utils";

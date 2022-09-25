@@ -31,7 +31,7 @@ export const RESPONSE_ERROR = {
     PRODUCT_NOT_EXIST:                  "product_not_exist",                ///< Несуществующий товар
     PRODUCT_NOT_AVAILABLE:              "product_not_available",            ///< Товар недоступен               (Товар скрыт)
 
-    PRODUCT_LARGE_AMOUNT:               "",                                 ///< Большое количество товара
+    PRODUCT_LARGE_AMOUNT:               "product_large_amount",             ///< Большое количество товара
     PRODUCT_NO_RIGHTS_TO_EDIT:          "product_no_rights_to_edit",        ///< Нет прав на редактирование товара
 
     REVIEW_NOT_EXIST:                   "review_not_exist",                 ///< Несуществующий отзыв
