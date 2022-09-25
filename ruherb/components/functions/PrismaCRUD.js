@@ -465,7 +465,20 @@ export async function SetProductVisible({ productId, visible }) {
   return product;
 }
 
+export async function DecrementProductAmount({ productId, decrementN }) {
+  const product = await prisma.product.update({
+    where: {
+      id: productId,
+    },
 
+    data: {
+      amount: { decrement: decrementN }
+    },
+
+    include: ProductInclude
+  });
+  return product;
+}
 
 
 /* ==================================================================================== */
@@ -615,6 +628,94 @@ export async function DeleteReview({ reviewId }) {
 
   return review;
 }
+
+
+
+
+/* ==================================================================================== */
+/* ====================================== Заказы ====================================== */
+/* ==================================================================================== */
+const OrderInclude = {
+  products: {
+    select: {
+      productId: true,
+      quantity: true,
+      product: {
+        select: {
+          price: true
+        }
+      }
+    }
+  },
+  delivery: {
+    select: {
+      address: true,
+      statusCode: true
+    }
+  }
+}
+
+
+export async function CreateOrder({ clientId, address, products }) {
+  let createProductsOnOrder = [];
+  for (const product of products) {
+    await DecrementProductAmount({
+      productId:  product.productId,
+      decrementN: product.quantity
+    });
+
+    createProductsOnOrder.push({
+      productId:  product.productId,
+      quantity:   product.quantity
+    });
+  }
+
+  let createDelivery = {
+    address: address
+  }
+
+
+  const order = await prisma.order.create({
+    data: {
+      clientId: clientId,
+      products: { create: createProductsOnOrder },
+      delivery: { create: createDelivery }
+    },
+
+    include: OrderInclude
+  });
+  return order;
+}
+
+
+
+
+export async function FindOrdersByClientId({ clientId, skip=0, take=0 }) {
+  var req = {
+    where: {
+      clientId: clientId
+    },
+
+    include: OrderInclude
+  }
+
+  if (skip > 0) {
+    req.skip = skip;
+  }
+
+  if (take > 0) {
+    req.take = take;
+  }
+
+  const order = await prisma.order.findMany(req);
+  return order;
+}
+
+
+
+
+
+
 
 
 
@@ -874,7 +975,7 @@ export async function DeleteRetailer({ id }) {
 }
 //!-----------------Оформление покупки-----------------
 
-export async function CreateOrder({ clientId }) {
+export async function CreateOrder___({ clientId }) {
   const order = await prisma.order.create({
     data: {
       clientId: clientId,
