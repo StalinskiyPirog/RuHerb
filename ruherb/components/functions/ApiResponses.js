@@ -3,13 +3,28 @@ import { RESPONSE_STATUS, RESPONSE_ERROR } from "./Enums"
 /**
  * @brief   Ответ API: Успешно
  * 
- * @param   {object} a_payload - Полезная нагрузка
+ * @param   {object} payload - Полезная нагрузка
  * @returns object
  */
-export function SuccessResponse(a_payload) {
+export function SuccessResponse(payload=null) {
     return {
         status: RESPONSE_STATUS.OK,
-        payload: a_payload
+        payload: payload
+    };
+};
+
+
+/**
+ * @brief   Ответ API: Предупреждение
+ * 
+ * @param   {RESPONSE_WARNING} warning - Предупреждение
+ * @returns object
+ */
+ export function WarningResponse(warning, payload=null) {
+    return {
+        status: RESPONSE_STATUS.WRANING,
+        error: warning,
+        payload: payload
     };
 };
 
@@ -17,12 +32,13 @@ export function SuccessResponse(a_payload) {
 /**
  * @brief   Ответ API: Ошибка
  * 
- * @param   {RESPONSE_ERROR} a_error - Ошибка
+ * @param   {RESPONSE_ERROR} error - Ошибка
  * @returns object
  */
-export function ErrorResponse(a_error) {
+export function ErrorResponse(error, payload=null) {
     return {
         status: RESPONSE_STATUS.ERROR,
-        error: a_error
+        error: error,
+        payload: payload
     };
 };

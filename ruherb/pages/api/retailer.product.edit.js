@@ -60,15 +60,58 @@ export default async function (req, res) {
         productId:  productId
     });
 
+    // Товар не найден
     if (product === null) {
         res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NOT_EXIST));
         return;
     }
 
+    // Сделавший запрос - не владелец товара
     if (product.retailerId !== retailer.id) {
         res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NO_RIGHTS_TO_EDIT));
         return;
     }
+
+
+    // Ищем категории, содержащиеся в запросе
+    var existCategories = await FindCategoriesByIds({
+        categoriesIds: fields.categoriesId
+    });
+
+    // Массив айди категорий, найденных в предыдущем пункте
+    var existCategoriesIds = [];
+    for (const category of existCategories) {
+        existCategoriesIds.push(category.id);
+    }
+
+    // Если кол-во найденных категорий не совпадает с количеством категорий в запросе 
+    // Ошибка: Не существуют категории [n, ...]
+    if (existCategoriesIds.length !== fields.categoriesId.length) {
+        var response = fields.categoriesId.filter(x => !existCategoriesIds.includes(x));
+        res.status(400).json(ErrorResponse(RESPONSE_ERROR.CATEGORY_NOT_EXIST, response));
+        return;
+    }
+
+
+    // Ищем изображения, содержащиейся в запросе
+    var existImages = await FindImagesByIds({
+        imagesIds: fields.imagesId
+    });
+
+    // Массив айди изображений, найденных в предыщуем пункте
+    var existImagesIds = [];
+    for (const image of existImages) {
+        existImagesIds.push(image.id);
+    }
+
+    // Если кол-во найденных изображений не совпадает с количеством изображений в запросе 
+    // Ошибка: Не существуют изображения [n, ...]
+    if (existImagesIds.length !== fields.imagesId.length) {
+        var response = fields.imagesId.filter(x => !existImagesIds.includes(x));
+        res.status(400).json(ErrorResponse(RESPONSE_ERROR.IMAGE_NOT_EXIST, response));
+        return;
+    }
+
 
     var product = await EditProduct({
         productId:  productId,

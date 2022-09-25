@@ -25,12 +25,12 @@ export const RESPONSE_ERROR = {
     INVALID_SESSION_KEY:                "invalid_session_key",              ///< Недействительный ключ сессии
     INVALID_CHANGE_PASSWORD_KEY:        "invalid_change_password_key",      ///< Недействительный ключ смены пароля
 
-    IMAGE_NOT_EXIST:                    "",                                 ///< Изображение не существует
-
+    IMAGE_NOT_EXIST:                    "image_not_exist",                  ///< Изображение не существует
+    CATEGORY_NOT_EXIST:                 "category_not_exist",               ///< Категория не существует
     ORDER_NOT_EXIST:                    "",                                 ///< Несуществующий заказ
     PRODUCT_NOT_EXIST:                  "product_not_exist",                ///< Несуществующий товар
+
     PRODUCT_LARGE_AMOUNT:               "",                                 ///< Большое количество товара
-    PRODUCT_CATEGORY_NOT_EXIST:         "",                                 ///< Категория товара не существует
     PRODUCT_NO_RIGHTS_TO_EDIT:          "product_no_rights_to_edit",        ///< Нет прав на редактирование товара
 
     REVIEW_NOT_EXIST:                   "",                                 ///< Несуществующий отзыв
@@ -38,3 +38,5 @@ export const RESPONSE_ERROR = {
     REVIEW_NO_RIGHTS_TO_EDIT:           "",                                 ///< Нет прав на изменение отзыва
     REVIEW_NO_RIGHTS_TO_ANSWER:         "",                                 ///< Нет прав на изменение отзыва
 };
+
+

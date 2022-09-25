@@ -351,6 +351,13 @@ export async function CreateProduct({
 
 
 
+/* ----------------------------------- Поиск товара ----------------------------------- */
+
+/**
+ * @brief   Поиск товара по айди
+ * 
+ * @returns Товар
+ */
 export async function FindProductById({ productId }) {
   const product = await prisma.product.findUnique({
     where: {
@@ -365,7 +372,7 @@ export async function FindProductById({ productId }) {
 }
 
 
-
+/* ----------------------------- Изменение данных товара ------------------------------ */
 
 /**
  * @brief   Редактирование товара
@@ -390,13 +397,12 @@ export async function EditProduct({ productId, data }) {
   return product;
 }
 
-
 /**
  * @brief   Изменение видимости товара
  * 
  * @returns Товар
  */
- export async function SetProductVisible({ productId, visible }) {
+export async function SetProductVisible({ productId, visible }) {
   const product = await prisma.product.update({
     where: {
       id: productId,
@@ -417,15 +423,35 @@ export async function EditProduct({ productId, data }) {
 
 
 
+/* ==================================================================================== */
+/* ==================================== Категории ===================================== */
+/* ==================================================================================== */
 
 
+/* --------------------------------- Поиск категорий ---------------------------------- */
+
+export async function FindCategoriesByIds({ categoriesIds }) {
+  const categories = prisma.category.findMany({
+    where: {
+      id: {in: categoriesIds}
+    }
+  });
+  return categories;
+}
 
 
+/* ==================================================================================== */
+/* =================================== Изображения ==================================== */
+/* ==================================================================================== */
 
-
-
-
-
+export async function FindImagesByIds({ imagesIds }) {
+  const images = prisma.productImage.findMany({
+    where: {
+      id: {in: imagesIds}
+    }
+  });
+  return images;
+}
 
 
 
