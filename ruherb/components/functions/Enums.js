@@ -27,16 +27,17 @@ export const RESPONSE_ERROR = {
 
     IMAGE_NOT_EXIST:                    "image_not_exist",                  ///< Изображение не существует
     CATEGORY_NOT_EXIST:                 "category_not_exist",               ///< Категория не существует
-    ORDER_NOT_EXIST:                    "",                                 ///< Несуществующий заказ
+    ORDER_NOT_EXIST:                    "order_not_exist",                  ///< Несуществующий заказ
     PRODUCT_NOT_EXIST:                  "product_not_exist",                ///< Несуществующий товар
+    PRODUCT_NOT_AVAILABLE:              "product_not_available",            ///< Товар недоступен               (Товар скрыт)
 
     PRODUCT_LARGE_AMOUNT:               "",                                 ///< Большое количество товара
     PRODUCT_NO_RIGHTS_TO_EDIT:          "product_no_rights_to_edit",        ///< Нет прав на редактирование товара
 
-    REVIEW_NOT_EXIST:                   "",                                 ///< Несуществующий отзыв
-    REVIEW_EDIT_TIMEOUT:                "",                                 ///< Таймаут изменения отзыва (минут 30?)
-    REVIEW_NO_RIGHTS_TO_EDIT:           "",                                 ///< Нет прав на изменение отзыва
-    REVIEW_NO_RIGHTS_TO_ANSWER:         "",                                 ///< Нет прав на изменение отзыва
+    REVIEW_NOT_EXIST:                   "review_not_exist",                 ///< Несуществующий отзыв
+    REVIEW_EDIT_TIMEOUT:                "review_edit_timeout",              ///< Таймаут изменения отзыва (минут 30?)
+    REVIEW_NO_RIGHTS_TO_EDIT:           "review_no_rights_to_edit",         ///< Нет права на изменение отзыва
+    REVIEW_NO_RIGHTS_TO_ANSWER:         "review_no_rights_to_answer",       ///< Нет права ответа на отзыв
 };
 
 

@@ -281,6 +281,17 @@ export async function RetailerConfirmEmail({ retailerId }) {
 /* ==================================================================================== */
 /* ====================================== Товар ======================================= */
 /* ==================================================================================== */
+const ProductInclude = {
+  categories: true,
+  images: true,
+  _count: {
+    select: {
+      reviews: true,
+      orders: true,
+    }
+  }
+}
+
 
 /**
  * @brief   Создание нового товара
@@ -340,10 +351,7 @@ export async function CreateProduct({
       },
     },
 
-    include: {
-      categories: true,
-      images: true
-    }
+    include: ProductInclude
   });
   return product;
 }
@@ -363,13 +371,11 @@ export async function FindProductById({ productId }) {
     where: {
       id: productId,
     },
-    include: {
-      categories: true,
-      images: true
-    },
+    include: ProductInclude
   });
   return product;
 }
+
 
 
 /* ----------------------------- Изменение данных товара ------------------------------ */
@@ -411,10 +417,7 @@ export async function EditProduct({ productId, data }) {
 
     data: data,
 
-    include: {
-      categories: true,
-      images: true
-    }
+    include: ProductInclude
   });
   return product;
 }
@@ -434,10 +437,7 @@ export async function SetProductVisible({ productId, visible }) {
       visible: visible
     },
 
-    include: {
-      categories: true,
-      images: true
-    }
+    include: ProductInclude
   });
   return product;
 }
@@ -477,8 +477,88 @@ export async function FindImagesByIds({ imagesIds }) {
 
 
 
+/* ==================================================================================== */
+/* ====================================== Отзывы ====================================== */
+/* ==================================================================================== */
+const ReviewInclude = {
+  client: {
+    select: {
+      id: true,
+      name: true,
+      surname: true,
+    }
+  }
+}
+
+export async function CreateReview({ productId, clientId, title, text, rating }) {
+  const review = await prisma.review.create({
+    data: {
+      productId:  productId,
+      clientId:   clientId,
+      title:      title,
+      text:       text,
+      rating:     rating
+    },
+    include: ReviewInclude
+  });
+
+  return review;
+}
 
 
+
+
+
+export async function FindReviewByReviewId({ reviewId }) {
+  const reviews = prisma.review.findUnique({
+    where: {
+      id: reviewId
+    },
+    include: ReviewInclude
+  });
+  return reviews;
+}
+
+
+export async function FindReviewsByProductId({ productId, skip=0, take=0 }) {
+  var req = {
+    where: {
+      productId: productId
+    },
+    include: ReviewInclude,
+  }
+
+  if (skip > 0) {
+    req.skip = skip;
+  }
+
+  if (take > 0) {
+    req.take = take;
+  }
+
+  const reviews = prisma.review.findMany(req);
+  return reviews;
+}
+
+
+
+export async function EditReview({ reviewId, title, text, rating }) {
+  const review = await prisma.review.update({
+    where: {
+      id:   reviewId,
+    },
+
+    data: {
+      title:      title,
+      text:       text,
+      rating:     rating
+    },
+
+    include: ReviewInclude
+  });
+
+  return review;
+}
 
 
 
