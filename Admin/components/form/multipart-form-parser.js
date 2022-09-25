@@ -9,10 +9,11 @@ export  default  async  function  parseMultipartForm(req, res, next) {
 		if (!err) {
 			req.body = fields; // sets the body field in the request object
 			req.files = files; // sets the files field in the request object
-		}
-			next(); // continues to the next middleware or to the route
+		} 
+			next();
 		})
 	} else {
+		console.log("Ошибка, файлы не прикрепились");
 		next();
 	}
 }

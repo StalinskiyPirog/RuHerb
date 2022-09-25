@@ -3,52 +3,9 @@ import Router from "next/router";
 import { useState, useRef } from "react";
 
 export default function RegisterForm() {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
-  const [category, setCategory] = useState("");
-  const [imgsSrc, setImgsSrc] = useState([])
-  const inputFileRef = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
   
-  const handleSubmit = (e) => {
-    setIsLoading(true);
-    e.preventDefault()
-    
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('surname', surname);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('city', city);
-    formData.append('category', category);
-    Object.values(inputFileRef.current.files).forEach(file => {
-      formData.append('file', file);
-  })
-    fetch("/api/registerNewRetailer", {
-      method: "POST",
-      body: formData,
-    }).then((res) => {
-      console.log("Ответ получен: ", res.json());
-      if (res.status === 200) {
-        setIsLoading(false);
-        name=""
-        email=""
-        phone=""
-        city=""
-        category="Витамины"
-        setName("");
-        setEmail("");
-        setPhone("");
-        inputFileRef.current.value = '';
-        setCity("");
-        setCategory("Витамины");
-        Router.push("/lk");
-      }
-    });
-  };
+  const inputFileRef = useRef(null);
+  const [imgsSrc, setImgsSrc] = useState([])
   
   return (
     <div>
@@ -59,7 +16,7 @@ export default function RegisterForm() {
           </h1>
         </div>
         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-xl shadow-black sm:max-w-md sm:rounded-lg">
-          <form>
+          <form method="post" action="/api/registerNewRetailer" encType="multipart/form-data">
             <div>
               <label
                 htmlFor="name"
@@ -70,10 +27,7 @@ export default function RegisterForm() {
               <div className="flex flex-col items-start">
                 <input
                   type="text"
-                  required
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
+                  require
                   name="name"
                   pattern="[А-Я][а-я]+"
                   placeholder="Иван"
@@ -91,12 +45,10 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col border-black items-start">
                 <input
-                  required
+                  require="true"
                   type="text"
                   name="surname"
-                  onChange={(e) => {
-                    setSurname(e.target.value);
-                  }}
+                  
                   pattern="[А-Я][а-я]+"
                   placeholder="Иванов"
                   className="block invalid:border-pink-500 invalid:text-pink-600 shadow-md shadow-black w-full mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -112,12 +64,10 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col items-start">
                 <input
-                  required
+                  require="true"
                   type="email"
                   name="email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                 
                   pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                   placeholder="name@mail.ru"
                   className="block invalid:border-pink-500 invalid:text-pink-600 shadow-md shadow-black w-full mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -133,12 +83,10 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col items-start">
                 <input
-                  required
+                  require="true"
                   type="phone"
                   name="phone"
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
+                  
                   pattern="^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$"
                   placeholder="+7 888 888 88 88"
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -154,13 +102,11 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col border-black items-start">
                 <input
-                  required
+                  require="true"
                   type="text"
                   pattern="[А-Я][а-я]+"
                   placeholder="Москва"
-                  onChange={(e) => {
-                    setCity(e.target.value);
-                  }}
+                 
                   name="city"
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
@@ -174,24 +120,12 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col border-black items-start">
                 <input
-                  required
-                  multiple
+                  require="true"
+                  multiple={true} 
                   type="file"
-                  ref={inputFileRef}
                   accept=".jpg, .jpeg, .png"
-                  onChange={(e) => {
-                    for (const file of e.target.files) {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = () => {
-                          setImgsSrc((imgs) => [...imgs, reader.result]);
-                        };
-                        reader.onerror = () => {
-                          console.log(reader.error);
-                        };
-                      }
-                  }}
                   name="images"
+                  lang=""
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
                 {imgsSrc.map((link) => (
@@ -212,7 +146,7 @@ export default function RegisterForm() {
               </label>
               <div className="flex flex-col items-start">
                 <select
-                  required
+                  require="true"
                   placeholder="Выберите категорию"
                   name="assort"
                   onChange={(e) => {
@@ -237,7 +171,7 @@ export default function RegisterForm() {
                     aria-describedby="check"
                     type="checkbox"
                     className="bg-gray-50 invalid:border-pink-500 invalid:text-pink-600 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded"
-                    required
+                    require="true"
                   />
                 </div>
                 <div className="text-sm ml-3">
@@ -253,10 +187,9 @@ export default function RegisterForm() {
             <div className="flex items-center justify-center mt-4">
               <button
                 type="submit"
-                onClick={(e)=>{handleSubmit(e)}}
                 className={`inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold
                 tracking-widest text-white uppercase transition duration-150 ease-in-out 
-                 border border-transparent rounded-md  false`+(isLoading? `border-purple-600 bg-purple-500`:`active:bg-gray-900 bg-gray-900`)}
+                 border border-transparent rounded-md  false active:bg-gray-900 bg-gray-900`}
                 
               >
                 Отправить
