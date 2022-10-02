@@ -2,14 +2,13 @@
  * @brief   Подтверждение почты
  */
 
-import { CreateProduct, FindProductsByFilter, FindProductsByFilters, FindRetailerBySessionKey }                  from "../../components/functions/PrismaCRUD";
+import { FindRetailerBySessionKey, EditRetailer }                   from "../../components/functions/PrismaCRUD";
 import { RESPONSE_ERROR }                                           from "../../components/functions/Enums"
 import { SuccessResponse, ErrorResponse }                           from "../../components/functions/ApiResponses"
-import { CheckRequiredFields, FilterObject }                                      from "../../components/functions/Utils";
-import { PrismaClient } from "@prisma/client";
-
-
-const REQUIRED_FIELDS = [];
+import { CheckRequiredFields }                                      from "../../components/functions/Utils";
+ 
+ 
+const REQUIRED_FIELDS = ["name", "surname", "patronymic", "companyName", "categoryId", "email", "city", "phone"];
 const REQUIRED_COOKIES = ["session-key"];
 
 
@@ -27,7 +26,7 @@ export default async function (req, res) {
         return;
     }
 
-    var fields = req.body
+    var fields = req.body;
 
     // Ошибка: Отсутствуют необходимые поля
     if (!CheckRequiredFields(REQUIRED_FIELDS, fields)) {
@@ -53,48 +52,18 @@ export default async function (req, res) {
         return;
     }
 
+    var retailer = await EditRetailer({
+        retailerId:     retailer.id, 
+        name:           fields.name, 
+        surname:        fields.surname, 
+        patronymic:     fields.patronymic, 
+        email:          fields.email, 
+        phone:          fields.phone, 
+        companyName:    fields.companyName, 
+        city:           fields.city, 
+        mainCategoryId: fields.categoryId
+    });
 
-
-    const products = await FindProductsByFilter({
-        filter: {
-            retailerId: retailer.id
-        }
-    })
-
-    var productsIds = [];
-    for (const product of products) {
-        productsIds.push(product.id);
-    } 
-
-    const prisma = new PrismaClient();
-
-    const productOnOrders = await prisma.productOnOrder.findMany({
-        where: {
-            productId: {
-                in: productsIds
-            }
-        }
-    })
-
-    const ordersIds = new Set();
-    for (const productOnOrder of productOnOrders) {
-        ordersIds.add(productOnOrder.orderId);
-    } 
-
-    console.log(ordersIds)
-
-    const orders = await prisma.productOnOrder.findMany({
-        where: {
-            productId: {
-                in: productsIds
-            }
-        }
-    })
-
-    // console.log(JSON.stringify(result, null, "\t"));
-
-
- 
-    res.status(200).json(SuccessResponse(null));
+    res.status(200).json(SuccessResponse(retailer));
 }
-  
+ 

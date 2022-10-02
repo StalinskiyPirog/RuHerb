@@ -34,6 +34,17 @@ export async function CreateClient({ name, surname, email, phone, password }) {
  * 
  * @returns Пользователь
  */
+export async function GetClients({ }) {
+  const client = await prisma.client.findMany({
+  });
+  return client;
+}
+
+/**
+ * @brief   Поиск пользователя по айди
+ * 
+ * @returns Пользователь
+ */
 export async function FindClientById({ clientId }) {
   const client = await prisma.client.findUnique({
     where:  { id: clientId }
@@ -116,6 +127,23 @@ export async function ClientConfirmEmail({ clientId }) {
 }
 
 /**
+ * @brief   Изменение данных пользователя
+ * 
+ * @returns Пользователь
+ */
+ export async function ClientEdit({ clientId, name, surname }) {
+  const client = await prisma.client.update({
+    where:  { id: clientId },
+    data: {
+      name: name,
+      surname: surname
+    }
+  })
+  return client;
+}
+
+
+/**
  * @brief   Подтверждение почты пользователя
  * 
  * @returns Пользователь
@@ -126,6 +154,8 @@ export async function ClientDelete({ clientId }) {
   })
   return client;
 }
+
+
 
 
 
@@ -157,6 +187,16 @@ export async function CreateRetailer({ name, surname, patronymic, email, phone, 
 
 
 /* --------------------------------- Поиск ритейлера ---------------------------------- */
+
+/**
+ * @brief   Поиск ритейлера по айди
+ * 
+ * @returns Ритейлер
+ */
+ export async function GetRetailers({ }) {
+  const retailer = await prisma.retailer.findMany({ });
+  return retailer;
+}
 
 /**
  * @brief   Поиск ритейлера по айди
@@ -247,6 +287,29 @@ export async function FindRetailerBySessionKey({ sessionKey }) {
   return retailer;
 }
 
+/**
+ * @brief   Поиск ритейлера по айди
+ * 
+ * @returns Ритейлер
+ */
+ export async function EditRetailer({ retailerId, name, surname, patronymic, email, phone, companyName, city, mainCategoryId }) {
+  const retailer = await prisma.retailer.delete({
+    where: {
+      id: retailerId
+    },
+    data: {
+      name:           name,
+      surname:        surname,
+      patrinymic:     patronymic,
+      email:          email,
+      phone:          phone,
+      companyName:    companyName,
+      city:           city,
+      mainCategoryId: mainCategoryId
+    },
+  });
+  return retailer;
+}
 
 /* ---------------------------- Изменение данных ритейлера ---------------------------- */
 
@@ -268,12 +331,45 @@ export async function RetailerUpdatePassword({ retailerId, newPassword }) {
  * 
  * @returns Ритейлер
  */
+ export async function RetailerConfirmProfile({ retailerId }) {
+  const retailer = await prisma.retailer.update({
+    where:  { id: retailerId },
+    data:   { confirmed: true }
+  })
+  return retailer;
+}
+
+/**
+ * @brief   Подтверждение почты ритейлера
+ * 
+ * @returns Ритейлер
+ */
 export async function RetailerConfirmEmail({ retailerId }) {
   const retailer = await prisma.retailer.update({
     where:  { id: retailerId },
     data:   { emailConfirmed: true }
   })
   return retailer;
+}
+
+export async function DeleteRetailer({ retailerId }) {
+  const deleteProducts = prisma.product.deleteMany({
+    where: {
+      retailerId: retailerId,
+    },
+  });
+
+  const deleteRetailer = prisma.retailer.delete({
+    where: {
+      id: retailerId,
+    },
+  });
+
+  const transaction = await prisma.$transaction([
+    deleteProducts,
+    deleteRetailer,
+  ]);
+  return transaction;
 }
 
 
@@ -360,6 +456,13 @@ export async function CreateProduct({
 
 
 /* ----------------------------------- Поиск товара ----------------------------------- */
+
+export async function GetProducts({ }) {
+  const product = await prisma.product.findMany({
+    include: ProductInclude
+  });
+  return product;
+}
 
 /**
  * @brief   Поиск товара по айди
@@ -480,6 +583,19 @@ export async function DecrementProductAmount({ productId, decrementN }) {
   return product;
 }
 
+/**
+ * @brief   Редактирование товара
+ * 
+ * @returns Товар
+ */
+export async function DeleteProduct({ productId }) {
+  const product = await prisma.product.delete({
+    where: {
+      id: productId,
+    }
+  });
+  return null;
+}
 
 /* ==================================================================================== */
 /* ==================================== Категории ===================================== */
@@ -487,6 +603,22 @@ export async function DecrementProductAmount({ productId, decrementN }) {
 
 
 /* --------------------------------- Поиск категорий ---------------------------------- */
+
+export async function CreateCategory({ name, keywords }) {
+  const category = prisma.category.create({
+    data: {
+      name: name,
+      keywords: keywords
+    }
+  });
+  return category;
+}
+
+export async function GetCategories({ }) {
+  const categories = prisma.category.findMany({
+  });
+  return categories;
+}
 
 export async function FindCategoriesByIds({ categoriesIds }) {
   const categories = prisma.category.findMany({
@@ -497,6 +629,20 @@ export async function FindCategoriesByIds({ categoriesIds }) {
   return categories;
 }
 
+
+export async function CategoryEdit({ categoryId, name, keywords }) {
+  const categories = prisma.category.findMany({
+    where: {
+      id: categoryId
+    },
+
+    data: {
+      name: name,
+      keywords: keywords
+    } 
+  });
+  return categories;
+}
 
 /* ==================================================================================== */
 /* =================================== Изображения ==================================== */
@@ -710,6 +856,80 @@ export async function FindOrdersByClientId({ clientId, skip=0, take=0 }) {
   const order = await prisma.order.findMany(req);
   return order;
 }
+
+
+
+/* ==================================================================================== */
+/* ================================= Адреса доставки ================================== */
+/* ==================================================================================== */
+
+
+export async function CreateDeliveryAddress({ address, name }) {
+  const delivery = await prisma.deliveryAddress.create({
+    data: {
+      address: address,
+      name: name
+    },
+  });
+
+  return delivery;
+}
+
+
+
+export async function GetDeliveryAddress({ }) {
+  const delivery = await prisma.deliveryAddress.findMany({
+  });
+
+  return delivery;
+}
+
+
+export async function EditDeliveryAddress({ id, address, name }) {
+  const delivery = await prisma.deliveryAddress.update({
+    where: {
+      id: id
+    },
+    data: {
+      address: address,
+      name: name
+    }
+  });
+
+  return delivery;
+}
+
+
+export async function DeleteDeliveryAddress({ id }) {
+  const delivery = await prisma.deliveryAddress.delete({
+    where: {
+      id: id
+    }
+  });
+
+  return delivery;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -954,25 +1174,7 @@ export async function UpdateUniqueRetailerById({ id, jsonObject }) {
   });
   return updateRetailer;
 }
-export async function DeleteRetailer({ id }) {
-  const deleteProducts = prisma.product.deleteMany({
-    where: {
-      authorId: id,
-    },
-  });
 
-  const deleteRetailer = prisma.retailer.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  const transaction = await prisma.$transaction([
-    deleteProducts,
-    deleteRetailer,
-  ]);
-  return transaction;
-}
 //!-----------------Оформление покупки-----------------
 
 export async function CreateOrder___({ clientId }) {

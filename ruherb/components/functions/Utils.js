@@ -1,4 +1,5 @@
 
+export const ADMIN_ID_OFFSET    = 0
 export const RETAILER_ID_OFFSET = 20000000
 
 

@@ -20,6 +20,14 @@ model Report {
   date DateTime @default(now())
   text String
 }
+
+model DeliveryAddress {
+    id              Int                 @id @default(autoincrement())
+    name            String
+    address         String
+}
+
+
 //!------------------------------
 
 
@@ -47,28 +55,6 @@ model Client {
 }
 
 
-model PaymentTransaction {
-    id              Int                 @id @default(autoincrement())
-
-    orderId         Int                 @unique
-    order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-    success         Boolean
-    date            DateTime
-}
-
-
-model Delivery {
-    id              Int                 @id @default(autoincrement())
-
-    orderId         Int                 @unique
-    order           Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
-
-    statusCode      Int                 @default(0)
-    address         String
-}
-
-
 model Order {
     id              Int                 @id @default(autoincrement())
 
@@ -76,11 +62,10 @@ model Order {
     client          Client              @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
     date            DateTime            @default(now())
-
-    delivery        Delivery?
-    paymant         PaymentTransaction?
     
     products        ProductOnOrder[]
+
+    address         String              @default("")
 }
 
 

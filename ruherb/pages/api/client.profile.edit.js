@@ -2,14 +2,13 @@
  * @brief   Подтверждение почты
  */
 
-import { CreateOrder, FindClientBySessionKey, FindProductById }     from "../../components/functions/PrismaCRUD";
+import { ClientEdit, FindClientBySessionKey }                       from "../../components/functions/PrismaCRUD";
 import { RESPONSE_ERROR }                                           from "../../components/functions/Enums"
 import { SuccessResponse, ErrorResponse }                           from "../../components/functions/ApiResponses"
 import { CheckRequiredFields }                                      from "../../components/functions/Utils";
- 
- 
-const REQUIRED_FIELDS = ["address", "products"];
-const REQUIRED_PRODUCTS_FIELDS = ["productId", "quantity"];
+
+
+const REQUIRED_FIELDS = ["name", "surname"];
 const REQUIRED_COOKIES = ["session-key"];
 
 
@@ -34,14 +33,6 @@ export default async function (req, res) {
         return;
     }
 
-    // Ошибка: отсутствуют вложенные поля
-    for (const orderProduct of fields.products) {
-        if (!CheckRequiredFields(REQUIRED_PRODUCTS_FIELDS, orderProduct)) {
-            res.status(400).json(ErrorResponse(RESPONSE_ERROR.INVALID_REQUEST_DATA));
-            return;
-        }
-    }
-
     // Ошибка: Отсутствует необходимые cookie
     if (!CheckRequiredFields(REQUIRED_COOKIES, req.headers)) {
         res.status(400).json(ErrorResponse(RESPONSE_ERROR.INVALID_REQUEST_DATA));
@@ -60,47 +51,11 @@ export default async function (req, res) {
         return;
     }
 
-
-    for (const orderProduct of fields.products) {
-        var product = await FindProductById({
-            productId:  orderProduct.productId
-        });
-
-        // Товар не найден
-        if (product === null) {
-            res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NOT_EXIST, {
-                productId: orderProduct.productId
-            }));
-            return;
-        }
-
-        // Товар недоступен
-        if (!product.visible) {
-            res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NOT_AVAILABLE));
-            return;
-        }
-
-        // Недоступно выбранное количество товара
-        if (product.amount < orderProduct.quantity) {
-            res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_LARGE_AMOUNT, {
-                productAmount: product.amount
-            }));
-            return;
-        }
-    }
-
-
-    // TODO: Оплата
-
-    // TODO: Вычитание товара после оплаты
-
-    var order = await CreateOrder({
+    client = await ClientEdit({
         clientId: client.id,
-        address: fields.address,
-        products: fields.products
+        name: fields.name,
+        surname: fields.surname
     })
-
-
-    res.status(200).json(SuccessResponse(order));
+    
+    res.status(200).json(SuccessResponse(review));
 }
- 

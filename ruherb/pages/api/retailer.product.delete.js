@@ -2,14 +2,13 @@
  * @brief   Подтверждение почты
  */
 
-import { CreateProduct, FindProductsByFilter, FindProductsByFilters, FindRetailerBySessionKey }                  from "../../components/functions/PrismaCRUD";
+import { FindProductById, FindRetailerBySessionKey, DeleteProduct } from "../../components/functions/PrismaCRUD";
 import { RESPONSE_ERROR }                                           from "../../components/functions/Enums"
 import { SuccessResponse, ErrorResponse }                           from "../../components/functions/ApiResponses"
-import { CheckRequiredFields, FilterObject }                                      from "../../components/functions/Utils";
-import { PrismaClient } from "@prisma/client";
-
-
-const REQUIRED_FIELDS = [];
+import { CheckRequiredFields }                                      from "../../components/functions/Utils";
+ 
+ 
+const REQUIRED_FIELDS = ["productId"];
 const REQUIRED_COOKIES = ["session-key"];
 
 
@@ -27,7 +26,7 @@ export default async function (req, res) {
         return;
     }
 
-    var fields = req.body
+    var fields = req.body;
 
     // Ошибка: Отсутствуют необходимые поля
     if (!CheckRequiredFields(REQUIRED_FIELDS, fields)) {
@@ -53,48 +52,26 @@ export default async function (req, res) {
         return;
     }
 
+    var product = await FindProductById({
+        productId:  fields.productId
+    });
 
+    // Товар не найден
+    if (product === null) {
+        res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NOT_EXIST));
+        return;
+    }
 
-    const products = await FindProductsByFilter({
-        filter: {
-            retailerId: retailer.id
-        }
-    })
+    // Сделавший запрос - не владелец товара
+    if (product.retailerId !== retailer.id) {
+        res.status(400).json(ErrorResponse(RESPONSE_ERROR.PRODUCT_NO_RIGHTS_TO_EDIT));
+        return;
+    }
 
-    var productsIds = [];
-    for (const product of products) {
-        productsIds.push(product.id);
-    } 
+    var product = await DeleteProduct({
+        productId:  fields.productId
+    });
 
-    const prisma = new PrismaClient();
-
-    const productOnOrders = await prisma.productOnOrder.findMany({
-        where: {
-            productId: {
-                in: productsIds
-            }
-        }
-    })
-
-    const ordersIds = new Set();
-    for (const productOnOrder of productOnOrders) {
-        ordersIds.add(productOnOrder.orderId);
-    } 
-
-    console.log(ordersIds)
-
-    const orders = await prisma.productOnOrder.findMany({
-        where: {
-            productId: {
-                in: productsIds
-            }
-        }
-    })
-
-    // console.log(JSON.stringify(result, null, "\t"));
-
-
- 
-    res.status(200).json(SuccessResponse(null));
+    res.status(200).json(SuccessResponse(product));
 }
-  
+ 
