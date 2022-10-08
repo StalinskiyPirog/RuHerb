@@ -13,7 +13,7 @@ export default function SearchBox(){
       <div className="absolute inset-y-0 left-0 flex items-center justify-center pl-3 pointer-events-none">
         <svg
           aria-hidden="true"
-          className="w-5 h-5 text-gray-500 dark:text-gray-400"
+          className="w-5 h-5 text-green-500 dark:text-green-400"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ export default function SearchBox(){
       <input
         type="text"
         id="simple-search"
-        className="text-sm text-gray-400 border border-gray-300 bg-gray-50 opacity-50 rounded-3xl focus:ring-blue-500 focus:border-blue-500 w-3/4 sm:w-3/4  lg:w-full pl-10 p-2.5  "
+        className="text-sm text-green-400 border border-green-300 bg-green-50 opacity-75 rounded-tr-full rounded-bl-full focus:ring-green-500 focus:border-green-500 w-3/4 sm:w-3/4  lg:w-full pl-10 p-2.5  "
         placeholder="Поиск"
         onChange={(e)=>{setRoute(e.target.value)}}
       />

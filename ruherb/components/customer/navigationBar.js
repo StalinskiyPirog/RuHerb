@@ -3,10 +3,10 @@ import Tabbar from "./tabbar/tabbar";
 import { useRouter } from "next/router";
 
 const navigationData = [
-  "/client",
-  "/client/searchResult/result",
-  "/client/order",
-  "/client/profile",
+  "/",
+  "/searchResult/result",
+  "/order",
+  "/profile",
 ];
 export default function Nav({}) {
 

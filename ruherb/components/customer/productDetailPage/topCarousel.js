@@ -5,25 +5,25 @@ import ProductCard from "./productCard";
 
 const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 8,
+    breakpoint: { max: 1536, min: 1280 },
+    items: 7,
     
-    slidesToSlide: 8
+    slidesToSlide: 7
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1280, min: 1024 },
     items: 5,
     
     slidesToSlide: 5
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min: 768 },
     items: 4,
     
     slidesToSlide: 4
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 768, min: 0 },
     items: 2,
     
     slidesToSlide: 2
@@ -32,6 +32,7 @@ const responsive = {
 
 
 export default function TopProductCarousel({array,props}){
+  console.log("появилось?")
     return( 
         <Carousel responsive={responsive}
            
@@ -45,12 +46,3 @@ export default function TopProductCarousel({array,props}){
         </Carousel>);
 }
 
-// This gets called on every request
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(API_URL+`/client/getProduct/topNewest`);
-  const data = await res.json();
-
-  // Pass data to the page via props
-  return { props: { data } }
-}

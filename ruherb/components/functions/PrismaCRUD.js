@@ -213,7 +213,7 @@ export async function FindProductsByFilters({
       sort = {
         _relevance: {
           fields: ["title", "about", "contain", "note"],
-          search: "text",
+          search: text,
           sort: "asc",
         },
       };

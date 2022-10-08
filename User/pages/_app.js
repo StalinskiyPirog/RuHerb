@@ -1,11 +1,17 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
 import React from "react";
-import { WishlistProvider } from 'react-use-wishlist';
+import NavigationLayout from "../components/NavigationLayout";
 
+import { WishlistProvider } from "react-use-wishlist";
+import { CartProvider } from "react-use-cart";
 export default function MyApp({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => page)
-
-  return getLayout(<WishlistProvider>
-    
-  <Component {...pageProps} /></WishlistProvider>)
+  return (
+    <NavigationLayout>
+      <WishlistProvider>
+        <CartProvider>
+          <Component {...pageProps} />
+        </CartProvider>
+      </WishlistProvider>
+    </NavigationLayout>
+  );
 }

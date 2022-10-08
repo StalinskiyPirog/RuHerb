@@ -1,6 +1,15 @@
 import Layout from "@/components/businessLayout";
+import { useEffect } from "react";
 
 export default function LKpage() {
+  useEffect(()=>{
+    const cookies = parseCookies();
+    if (Object.entries(cookies).length == 0 && Object.entries(cookies)[0] != "session-key"){
+      Router.push('/login');
+    }
+  })
+
+  return(
   <div className="bg-green-700">
     Здесь много текстаЗдесь много текстаЗдесь много текстаЗдесь много
     текстаЗдесь много текстаЗдесь много текстаЗдесь много текстаЗдесь много
@@ -15,7 +24,7 @@ export default function LKpage() {
     текстаЗдесь много текстаЗдесь много текстаЗдесь много текстаЗдесь много
     текстаЗдесь много текстаЗдесь много текстаЗдесь много текстаЗдесь много
     текстаЗдесь много текстаЗдесь много текстаЗдесь много текста
-  </div>
+  </div>)
 }
 
 LKpage.getLayout = function getLayout(page) {

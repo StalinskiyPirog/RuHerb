@@ -12,11 +12,11 @@ export default function Navbar() {
         <title>RuHerb - интернет-магазин для преобретения ЗОЖ-продукции</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <nav className="w-full fixed z-[10] h-[10] border-black shadow-xl bg-white">
+      <nav className="w-full fixed z-[10] border-black shadow-xl bg-white">
         <div className="flex justify-between  mx-0 my-auto lg:max-w-full md:items-center md:px-8">
           
          
-            <div className="flex relative sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 w-12 h-12 items-center justify-between py-3 md:py-2">
+            <div className="flex relative sm:w-16 sm:h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 w-12 h-12 items-center justify-items-stretch py-3 md:py-2">
               <Link href="/">
                 <Image
                   src="/design_parts/logo.png"
@@ -29,7 +29,7 @@ export default function Navbar() {
             </div>
             <div className="md:hidden  self-center ">
                             <button
-                                className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
+                                className="p-2 text-green-600 rounded-br-2xl rounded-tl-2xl outline-none focus:bg-green-300 border"
                                 onClick={() => setNavbar(!navbar)}
                             >
                                 {navbar ? (
@@ -69,16 +69,16 @@ export default function Navbar() {
                         }`}>
               <ul className="items-center justify-center space-y-8 rounded-md md:flex md:space-x-6 md:space-y-0">
                 <li className="hover:text-black text-green-700">
-                  <Link href="/retailer#first">Стать продавцом</Link>
+                  <Link  href="/#first">Стать продавцом</Link>
                 </li>
                 <li className="hover:text-black text-green-700">
-                  <Link href="/retailer#second">О сервисе</Link>
+                  <Link href="/#second">О сервисе</Link>
                 </li>
                 <li className="hover:text-black text-green-700">
-                  <Link href="/retailer#third">Сотрудничество</Link>
+                  <Link href="/#third">Сотрудничество</Link>
                 </li>
                 <li className="hover:text-black text-green-700">
-                  <Link href="/retailer/lk">Личный кабинет</Link>
+                  <Link href="/lk">Личный кабинет</Link>
                 </li>
                
               </ul>

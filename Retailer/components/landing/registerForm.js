@@ -7,8 +7,8 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [city, setCity] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [category, setCategory] = useState("");
-  const [file, setFile] = useState("");
   const [submitted, setSubmitted] = useState(false);
   
   const handleSubmit = (e) => {
@@ -20,6 +20,7 @@ export default function RegisterForm() {
       phone,
       city,
       category,
+      companyName
     };
     fetch("/api/registerNewRetailer", {
       method: "POST",
@@ -157,27 +158,26 @@ export default function RegisterForm() {
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
               </div>
-              <div className="mt-4">
+            </div>
+            <div className="mt-4">
               <label
                 htmlFor="city"
                 className="block text-sm font-medium text-gray-700 undefined"
               >
-                Файлы
+                Название компании
               </label>
               <div className="flex flex-col border-black items-start">
                 <input
                   required
-                  multiple
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  placeholder="Москва"
+                  type="text"
+                  pattern="[а-яА-яa-zA-Z]+"
+                  placeholder="RuHerb"
                   onChange={(e) => {
-                    setFile(e.target.value);
+                    setCity(e.target.value);
                   }}
-                  name="images"
+                  name="city"
                   className="block invalid:border-pink-500 invalid:text-pink-600 w-full shadow-md shadow-black mt-1 border-black rounded-md  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
-              </div>
               </div>
             </div>
 

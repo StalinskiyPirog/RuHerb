@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Jumbotrone() {
   return (
     
-      <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      <div className="container mx-auto flex px-10 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow  ml-1/3 md:w-1/2 lg:pr-24 md:pr-16 md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h1 className="align-center text-xl sm:text-4xl mb-4 font-medium text-gray-900">
             

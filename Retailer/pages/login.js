@@ -1,7 +1,41 @@
 import Image from "next/image";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { destroyCookie } from "nookies";
 export default function LoginPage({}){
+
+    const router = useRouter();
+    const [IsLoading,setIsLoading] = useState(false);
+  
+    useEffect(() => {
+      destroyCookie(null, 'session-key')
+      
+    }, []);
+  
+    const handleSubmit = async (e) => {
+      setIsLoading(true);
+      e.preventDefault()
+  
+      const data = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      }
+      fetch("/api/retailer.profile.login", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 200) {
+          router.push("/lk");
+        } else {
+          router.reload();
+        }
+      });
+    };
+
   return(<main className="bg-white font-family-karla h-screen">
 
   <div className="w-full flex flex-wrap">
@@ -41,10 +75,10 @@ export default function LoginPage({}){
                       
                   </div>
   
-                  <input type="submit" value="Log In" className="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"/>
+                  <input type="submit" value="Ввод" className="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"/>
               </form>
               <div className="text-center pt-12 pb-12">
-                  <p>Еще не зарегистрированы? <a href="./#fourth" className="underline font-semibold">Заполните форму здесь</a></p>
+                  <p>Еще не зарегистрированы? Заполните форму<a href="./#fourth" className="underline font-semibold"> здесь</a> и дождитесь письма с информацией для авторизации</p>
               </div>
           </div>
 

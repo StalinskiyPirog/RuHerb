@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Layout from "../../components/customerLayout";
 import Image from "next/image";
 
 export default function CheckoutPage() {
@@ -284,7 +283,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-CheckoutPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
-};

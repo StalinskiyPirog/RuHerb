@@ -4,13 +4,14 @@ import Nav from "./business/navbar";
 
 export default function Layout({children}){
     return(
-        <>
+        <div className="flex">
         <Nav />
         
-        <main className="min-h-screen">{children}</main>
+        <main ><div className="min-h-screen max-w-2/3 md:w-1/2">{children}</div>
+        <Footer /></main>
         
-        <Footer />
+        
     
-        </>
+        </div>
     )
 }

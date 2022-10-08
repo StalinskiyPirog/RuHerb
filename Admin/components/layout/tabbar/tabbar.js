@@ -1,28 +1,20 @@
 import classNames from "classnames";
-import { ImUsers, ImUserTie } from "react-icons/im";
-import { CgProfile } from "react-icons/cg";
-import { FaAppleAlt } from "react-icons/fa";
-import { GrUserAdmin } from "react-icons/gr";
+import {AiFillHome} from "react-icons/ai";
+import { FaTable, FaUserAlt } from "react-icons/fa";
 import Link from "next/link";
 import { useCallback } from "react";
 export default function Tabbar({ navigationData, router }) {
-  const getTabIcon = useCallback((item) => {
+  const getIcon = useCallback((item) => {
     switch (item) {
-      case "/moders":
-        return <GrUserAdmin />;
-      case "/products":
-        return <FaAppleAlt />;
       case "/":
-        return <CgProfile />;
-      case "/retailers":
-        return <ImUserTie />;
-      case "/users":
-        return <ImUsers />;
+        return <AiFillHome />;
+      case "/table":
+        return <FaTable />;
     }
   }, []);
 
   return (
-    <nav className="fixed flex flex-row items-center justify-between visible w-full px-8 text-2xl bg-[#a4c852] z-50 bottom-0 md:hidden h-20 md:invisible">
+    <nav className="fixed flex flex-row items-center justify-between visible w-full px-8 text-2xl bg-[#a4c852] z-50 bottom-0 mdhidden h-20 md:invisible">
       {navigationData.map((item, index) => (
         <Link key={index} href={item}>
           <span
@@ -31,7 +23,7 @@ export default function Tabbar({ navigationData, router }) {
             : "flex items-center justify-center h-full text-black cursor-pointer hover:text-white w-full"
                
                 }
-          >{getTabIcon(item)}
+          >{getIcon(item)}
           </span>
         </Link>
       ))}

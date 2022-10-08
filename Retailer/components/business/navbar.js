@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 const navigationData = [
-  "/retailer/lk",
-  "/retailer/lk/feed",
-  "/retailer/lk/stats",
-  "/retailer/lk/create",
+  "/lk",
+  "/lk/products",
+  "/lk/stats",
+  "/lk/create",
 ];
 export default function Nav({}) {
 

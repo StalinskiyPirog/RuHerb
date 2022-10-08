@@ -1,25 +1,23 @@
 import { useRouter } from "next/router";
-import Breadcrumb from "../../../components/customer/productDetailPage/breadcrumb";
-import CategoryList from "../../../components/customer/productDetailPage/badge";
-import ProductCard from "@/components/customer/productDetailPage/productCard";
+import Breadcrumb from "../../components/productDetailPage/breadcrumb";
+import CategoryList from "../../components/productDetailPage/badge";
+import ProductCard from "../../components/productDetailPage/productCard";
 import Image from "next/image";
-import Carousel from "react-multi-carousel";
-import Layout from "@/components/customerLayout";
 import { ReactPhotoCollage } from "react-photo-collage";
 
 
 
 const setting = {
-  width: '600px',
-  height: ['250px', '170px'],
+  width: "600px",
+  height: ['300px', '200px'],
   layout: [1, 4],
   photos: [
-    { source: 'public/design_parts/watermelonDrink.png' },
-    { source: 'public/design_parts/watermelonDrink.png' },
-    { source: 'public/design_parts/watermelonDrink.png' },
-    { source: 'public/design_parts/watermelonDrink.png' },
-    { source: 'public/design_parts/watermelonDrink.png' },
-    { source: 'public/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
+    { source: '/design_parts/watermelonDrink.png' },
   ],
   showNumOfRemainingPhotos: true
 };
@@ -55,8 +53,6 @@ export default function ProductPage({ slug }) {
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
                   />
                 </svg>
-
-                <span className="text-xs ml-1.5">Hover to zoom</span>
               </div>
             </div>
 
@@ -75,10 +71,10 @@ export default function ProductPage({ slug }) {
                       id="color_green"
                       name="color"
                       className="sr-only peer"
-                      checked
+                      defaultChecked
                     />
 
-                    <span className="block w-6 h-6 bg-green-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-gray-300"></span>
+                    <span className="block w-6 h-6 bg-green-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-green-500"></span>
                   </label>
 
                   <label htmlFor="color_blue" className="cursor-pointer">
@@ -89,7 +85,7 @@ export default function ProductPage({ slug }) {
                       className="sr-only peer"
                     />
 
-                    <span className="block w-6 h-6 bg-blue-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-gray-300"></span>
+                    <span className="block w-6 h-6 bg-blue-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-green-500"></span>
                   </label>
 
                   <label htmlFor="color_pink" className="cursor-pointer">
@@ -100,7 +96,7 @@ export default function ProductPage({ slug }) {
                       className="sr-only peer"
                     />
 
-                    <span className="block w-6 h-6 bg-pink-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-gray-300"></span>
+                    <span className="block w-6 h-6 bg-pink-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-green-500"></span>
                   </label>
 
                   <label htmlFor="color_red" className="cursor-pointer">
@@ -111,7 +107,7 @@ export default function ProductPage({ slug }) {
                       className="sr-only peer"
                     />
 
-                    <span className="block w-6 h-6 bg-red-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-gray-300"></span>
+                    <span className="block w-6 h-6 bg-red-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-green-500"></span>
                   </label>
 
                   <label htmlFor="color_indigo" className="cursor-pointer">
@@ -122,7 +118,7 @@ export default function ProductPage({ slug }) {
                       className="sr-only peer"
                     />
 
-                    <span className="block w-6 h-6 bg-indigo-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-gray-300"></span>
+                    <span className="block w-6 h-6 bg-indigo-700 border border-gray-200 rounded-full ring-1 ring-offset-1 ring-transparent peer-checked:ring-green-500"></span>
                   </label>
                 </div>
               </fieldset>
@@ -137,10 +133,10 @@ export default function ProductPage({ slug }) {
                       id="material_cotton"
                       name="material"
                       className="sr-only peer"
-                      checked
+                      defaultChecked
                     />
 
-                    <span className="block px-3 py-1 text-xs border border-gray-200 rounded-full peer-checked:bg-gray-100">
+                    <span className="block px-3 py-1 text-xs border border-gray-200 rounded-full peer-checked:bg-green-200">
                       Cotton
                     </span>
                   </label>
@@ -151,10 +147,10 @@ export default function ProductPage({ slug }) {
                       id="material_wool"
                       name="material"
                       className="sr-only peer"
-                      checked
+                      defaultChecked
                     />
 
-                    <span className="block px-3 py-1 text-xs border border-gray-200 rounded-full peer-checked:bg-gray-100">
+                    <span className="block px-3 py-1 text-xs border border-gray-200 rounded-full peer-checked:bg-green-200">
                       Wool
                     </span>
                   </label>
@@ -179,7 +175,7 @@ export default function ProductPage({ slug }) {
 
               <button
                 type="submit"
-                className="w-full px-6 py-3 text-sm font-bold tracking-wide text-white uppercase bg-red-700 rounded"
+                className="w-full px-6 py-3 text-sm font-bold tracking-wide text-white uppercase bg-green-500 rounded"
               >
                 Add to cart
               </button>
@@ -229,7 +225,3 @@ export default function ProductPage({ slug }) {
     </section>
   );
 }
-
-ProductPage.getLayout = function getLayout(page) {
-  return <Layout>{page}</Layout>;
-};

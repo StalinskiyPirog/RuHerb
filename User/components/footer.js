@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="invisible hidden md:visible md:block bottom-0 inset-y-0">
+    <div className="w-full  block bottom-0 inset-y-0">
       <footer className="text-white bg-green-700">
         <div className="h-auto sm:px-6 lg:px-8">
           

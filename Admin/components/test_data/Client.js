@@ -1,5 +1,19 @@
 let Clients = [
     {
+        id: 0,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        promocodes: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
         id: 1,
         name: "Иван",
         surname: "Иванов",
@@ -10,6 +24,85 @@ let Clients = [
         orders: [],
         reviews: [],
         emailConfirmed: false,
-        createdAt
-    }
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    {
+        id: 1,
+        name: "Иван",
+        surname: "Иванов",
+        mail: "mr_patterson@vk.com",
+        phone: "+79827358520",
+        password: "fishdom",
+        wishList: [],
+        orders: [],
+        reviews: [],
+        emailConfirmed: false,
+        createdAt:"26.09.2022"
+    },
+    
 ]

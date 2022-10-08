@@ -7,13 +7,13 @@ import { useCallback } from "react";
 export default function Tabbar({ navigationData, router }) {
   const getTabIcon = useCallback((item) => {
     switch (item) {
-      case "/retailer/lk/stats":
+      case "/lk/stats":
         return <MdQueryStats />;
-      case "/retailer/lk/feed":
+      case "/lk/products":
         return <MdDynamicFeed />;
-      case "/retailer/lk":
+      case "/lk":
         return <CgProfile />;
-      case "/retailer/lk/create":
+      case "/lk/create":
         return <AiOutlineAppstoreAdd />;
     }
   }, []);

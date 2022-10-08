@@ -9,30 +9,30 @@ import { useCallback } from "react";
 export default function SideBar({ navigationData, router }) {
   const getIcon = useCallback((item) => {
     switch (item) {
-      case "/retailer/lk/stats":
+      case "/lk/stats":
         return <MdQueryStats />;
-      case "/retailer/lk/feed":
+      case "/lk/products":
         return <MdDynamicFeed />;
-      case "/retailer/lk":
+      case "/lk":
         return <CgProfile />;
-      case "/retailer/lk/create":
+      case "/lk/create":
         return <AiOutlineAppstoreAdd />;
     }
   }, []);
   const getTitle = useCallback((item) => {
     switch (item) {
-      case "/retailer/lk/stats":
+      case "/lk/stats":
         return "Статистика";
-      case "/retailer/lk/feed":
+      case "/lk/products":
         return "Лента продуктов";
-      case "/retailer/lk":
+      case "/lk":
         return "Профиль";
-      case "/retailer/lk/create":
+      case "/lk/create":
         return "Создать новый продукт";
     }
   }, []);
   return (
-    <section className="bg-[url('../public/design_parts/sidebar.png')] bg-no-repeat bg-cover w-sm invisible md:visible absolute border-l-green-700 right-0 h-full shadow-md border-2 ">
+    <aside className="bg-[url('../public/design_parts/sidebar.png')] bg-repeat bg-cover w-sm invisible md:visible fixed  top-0 border-green-700 right-0 h-auto shadow-md border-2 ">
       
         <div className="w-72  content-center    h-screen">
           <nav className="mt-10 px-6 flex-col ">
@@ -58,6 +58,6 @@ export default function SideBar({ navigationData, router }) {
     
 
       
-    </section>
+    </aside>
   );
 }

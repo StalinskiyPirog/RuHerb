@@ -7,7 +7,7 @@ export default function ProductCard({  id, title, category, rating, price }) {
   const [isFav, setFav] = useState(false);
   
   return (
-    <div className="select-none w-full  p-2 my-2">
+    <div className="select-none sm:w-1/3 sm:h-1/3 lg:w-full p-2 my-2">
       <div className=" shadow-lg border-gray-700 hover:shadow-xl rounded-full-lg ">
         <div
          style={{

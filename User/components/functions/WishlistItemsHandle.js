@@ -28,10 +28,10 @@ export function IsItemInWishlist({id}){
 
 export function IsWishlistEmpty(){
   const { isWishlistEmpty } = useWishlist();
-  return isWishlistEmpty();
+  return isWishlistEmpty;
 }
 
 export function WishlistItems(){
   const { items } = useWishlist();
-  return items();
+  return items;
 }

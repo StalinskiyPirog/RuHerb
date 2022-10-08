@@ -1,8 +1,8 @@
-import Layout from "../../components/landingLayout";
-import Jumbotrone from "../../components/landing/jumbotron";
-import ThirdJumbotron from "../../components/landing/thirdJumbotron";
-import SecondJumbotron from "../../components/landing/secondJumbotron";
-import RegisterForm from "../../components/landing/registerForm";
+import Layout from "../components/landingLayout";
+import Jumbotrone from "../components/landing/jumbotron";
+import ThirdJumbotron from "../components/landing/thirdJumbotron";
+import SecondJumbotron from "../components/landing/secondJumbotron";
+import RegisterForm from "../components/landing/registerForm";
 import { motion } from "framer-motion";
 
 export default function IndexPage(){

@@ -1,0 +1,58 @@
+let category = [
+  {
+    id:0,
+    name: "Витамины",
+    products: [0,1],
+    keywords: [],
+    retailers: [0,1],
+  },
+  {
+    id:1,
+    name: "Биодобавки",
+    products: [2,3],
+    keywords: [],
+    retailers: [2,3],
+  },
+  {
+    id:2,
+    name: "Лекарства",
+    products: [4,5],
+    keywords: [],
+    retailers: [4,5],
+  },
+  {
+    id:3,
+    name: "Лечебные травы",
+    products: [6,7],
+    keywords: [],
+    retailers: [6,7],
+  },
+  {
+    id:4,
+    name: "Чаи",
+    products: [10,11],
+    keywords: [],
+    retailers: [10,11],
+  },
+  {
+    id:5,
+    name: "Фрукты",
+    products: [12,13],
+    keywords: [],
+    retailers: [12,13],
+  },
+  {
+    id:6,
+    name: "Злаки",
+    products: [14,15],
+    keywords: [],
+    retailers: [14,15],
+  },
+  {
+    id:7,
+    name: "Напитки",
+    products: [14,15],
+    keywords: [],
+    retailers: [14,15],
+  },
+];

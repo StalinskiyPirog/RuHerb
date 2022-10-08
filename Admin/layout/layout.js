@@ -1,12 +1,13 @@
-import SideBar from "../components/layout/sidebar";
+import NavigationLayout from "../components/layout/NavigationLayout";
+import Footer from "./Footer";
 export default function Layout({children}){
     return(
-      <div >
-      <SideBar
+      < >
+      <NavigationLayout
 
       />
-  {children}
-      {/* <Footer /> */}
-    </div>
+ <main> {children}</main>
+      <Footer /> 
+    </>
     );
 }

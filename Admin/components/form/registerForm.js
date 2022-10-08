@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/Image";
 import Router from "next/router";
 import { useState, useRef } from "react";
 
@@ -27,7 +27,7 @@ export default function RegisterForm() {
               <div className="flex flex-col items-start">
                 <input
                   type="text"
-                  require
+                  require="true"
                   name="name"
                   pattern="[А-Я][а-я]+"
                   placeholder="Иван"
@@ -149,9 +149,7 @@ export default function RegisterForm() {
                   require="true"
                   placeholder="Выберите категорию"
                   name="assort"
-                  onChange={(e) => {
-                    setCategory(e.target.value);
-                  }}
+                  
                   className="block py-2 px-1 border mr-6 focus:outline-none w-full mt-1 shadow-md shadow-black rounded-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 >
                   <option>Витамины</option>

@@ -46,20 +46,20 @@ export default function NavBar({ navigationData }) {
           <div>
             <div className="flex-1 hidden pb-3 mt-8 justify-self-center md:block md:pb-0 md:mt-0 ">
               <ul className="items-center justify-center space-y-8 rounded-md md:flex md:space-x-6 md:space-y-0">
-                <li className="text-black hover:text-green-500">
+                <li className="text-green-500 hover:text-green-700">
                   <Link href="/client/delivery">Доставка</Link>
                 </li>
-                <li className="text-black hover:text-green-500">
+                <li className="text-green-500 hover:text-green-700">
                   <Link href="/client/payment">Оплата</Link>
                 </li>
-                <li className="text-black hover:text-green-500">
+                <li className="text-green-500 hover:text-green-700">
                   <Link href="/client/favourite">Избранное</Link>
                 </li>
                 
-                <li className="text-black hover:text-green-500">
+                <li className="text-green-500 hover:text-green-700">
                   <Link href="/client/lk">Личный кабинет</Link>
                 </li>
-                <li className="text-black hover:text-green-500">
+                <li className="text-green-500 hover:text-green-700">
                   <button
                     onClick={() => {
                       setCart(true);
